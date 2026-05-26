@@ -225,8 +225,31 @@
           <fieldset class="quick-fields">
             <legend>Por onde começamos?</legend>
             <div class="field-grid compact">
-              <label>Nome da marca<input name="marca" type="text" autocomplete="organization" required placeholder="Ex.: HH Amorim"></label>
-              <label>WhatsApp<input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(11) 99999-9999"></label>
+              <label>
+                Nome da marca
+                <input
+                  name="marca"
+                  type="text"
+                  autocomplete="organization"
+                  required
+                  placeholder="Ex.: HH Amorim"
+                  aria-describedby="marcaHint"
+                >
+                <span class="field-hint" id="marcaHint">Pode ser o nome que você já usa ou pretende lançar.</span>
+              </label>
+              <label>
+                WhatsApp
+                <input
+                  name="whatsapp"
+                  type="tel"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  required
+                  placeholder="(11) 99999-9999"
+                  aria-describedby="whatsappHint"
+                >
+                <span class="field-hint" id="whatsappHint">Use DDD para a equipe retornar com segurança.</span>
+              </label>
             </div>
           </fieldset>
           <label class="consent-field">
@@ -234,7 +257,7 @@
             Autorizo a HH Amorim a usar estes dados para retornar sobre a análise inicial da minha marca.
           </label>
 
-          <p class="form-error" id="formError" role="alert"></p>
+          <p class="form-error" id="formError" role="alert" aria-live="polite"></p>
           <div class="form-actions">
             <button class="button primary submit-button" type="submit" id="submitLead">Receber diagnóstico</button>
           </div>
@@ -243,7 +266,7 @@
         <div class="thank-you" id="thankYou" hidden>
           <p class="eyebrow">Recebemos seus dados</p>
           <h2>Agora escolha um horário para a análise inicial da sua marca.</h2>
-          <p id="leadStatus">Sua solicitação foi registrada. O próximo passo é escolher um horário para atendimento.</p>
+          <p id="leadStatus" role="status">Sua solicitação foi registrada. O próximo passo é escolher um horário para atendimento.</p>
           <div class="thank-you-actions">
             <a class="button primary" id="calendarLink" href="mailto:contato@hhamorim.com.br?subject=Analise%20de%20Registro%20de%20Marca">Agendar análise</a>
             <a class="button secondary" href="https://instagram.com/hhamorim" target="_blank" rel="noreferrer">Instagram</a>

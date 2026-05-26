@@ -184,6 +184,14 @@ input {
   transform: translateY(-1px);
 }
 
+.button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+input:focus-visible {
+  outline: 3px solid oklch(0.68 0.16 38 / 0.72);
+  outline-offset: 4px;
+}
+
 .button.primary {
   color: var(--surface);
   background: var(--brand);
@@ -637,6 +645,13 @@ input:focus {
   box-shadow: 0 0 0 4px oklch(0.55 0.08 165 / 0.18);
 }
 
+.field-hint {
+  color: oklch(0.5 0.035 165);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
 .field-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -914,5 +929,16 @@ details p {
   .lead-form,
   .thank-you {
     border-radius: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
