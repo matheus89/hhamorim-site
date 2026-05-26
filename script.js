@@ -5,6 +5,10 @@ const submitButton = document.querySelector("#submitLead");
 const thankYou = document.querySelector("#thankYou");
 const leadStatus = document.querySelector("#leadStatus");
 const calendarLink = document.querySelector("#calendarLink");
+const clientTrack = document.querySelector("#clientTrack");
+const clientPrev = document.querySelector("#clientPrev");
+const clientNext = document.querySelector("#clientNext");
+const clientDots = document.querySelector("#clientDots");
 
 window.dataLayer = window.dataLayer || [];
 
@@ -155,3 +159,51 @@ form.addEventListener("submit", async (event) => {
 document.querySelectorAll("[data-event]").forEach((element) => {
   element.addEventListener("click", () => track(element.dataset.event));
 });
+
+function setupClientCarousel() {
+  if (!clientTrack || !clientPrev || !clientNext || !clientDots) return;
+
+  const cards = [...clientTrack.querySelectorAll(".client-logo-card")];
+  const dots = cards.map((_, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Ir para cliente ${index + 1}`);
+    dot.addEventListener("click", () => {
+      cards[index].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    });
+    clientDots.appendChild(dot);
+    return dot;
+  });
+
+  function updateDots() {
+    const trackCenter = clientTrack.scrollLeft + clientTrack.clientWidth / 2;
+    let activeIndex = 0;
+    let activeDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - trackCenter);
+      if (distance < activeDistance) {
+        activeDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === activeIndex);
+      dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
+    });
+  }
+
+  function scrollByCard(direction) {
+    const cardWidth = cards[0].offsetWidth + 14;
+    clientTrack.scrollBy({ left: direction * cardWidth, behavior: "smooth" });
+  }
+
+  clientPrev.addEventListener("click", () => scrollByCard(-1));
+  clientNext.addEventListener("click", () => scrollByCard(1));
+  clientTrack.addEventListener("scroll", () => window.requestAnimationFrame(updateDots));
+  updateDots();
+}
+
+setupClientCarousel();

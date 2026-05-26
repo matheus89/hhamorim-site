@@ -315,6 +315,12 @@ input:focus-visible {
   margin-bottom: 34px;
 }
 
+.section-heading.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 .risk-section {
   display: grid;
   gap: 34px;
@@ -464,15 +470,189 @@ input:focus-visible {
   margin: 0;
 }
 
+.clients-section {
+  max-width: none;
+  width: 100%;
+  padding-left: max(16px, calc((100% - 1180px) / 2));
+  padding-right: max(16px, calc((100% - 1180px) / 2));
+  background: oklch(0.985 0.008 155);
+}
+
+.client-carousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+}
+
+.client-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(166px, 1fr);
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.client-track::-webkit-scrollbar {
+  display: none;
+}
+
+.client-logo-card {
+  min-height: 170px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 26px 18px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 18px 50px oklch(0.18 0.035 165 / 0.06);
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.client-logo-card strong {
+  color: var(--brand-deep);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.client-logo-card:nth-child(2n) strong {
+  color: var(--coral);
+}
+
+.client-logo-card:nth-child(3n) strong {
+  color: var(--brand);
+}
+
+.client-logo-card span {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.carousel-button {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.carousel-button:hover {
+  color: var(--surface);
+  background: var(--brand);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.carousel-dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: oklch(0.62 0.02 165);
+  cursor: pointer;
+}
+
+.carousel-dots button.active {
+  background: var(--coral);
+  transform: scale(1.35);
+}
+
+.client-note {
+  max-width: 620px;
+  margin: 20px auto 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.92rem;
+}
+
 .founder {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
   gap: 18px;
 }
 
 .founder-card {
   padding: clamp(30px, 5vw, 58px);
   background: linear-gradient(135deg, var(--surface), oklch(0.93 0.05 150));
+}
+
+.founder-story {
+  color: var(--surface);
+  background: var(--brand-deep);
+}
+
+.founder-story h2 {
+  color: var(--surface);
+}
+
+.founder-story p:not(.eyebrow) {
+  color: oklch(0.9 0.025 155);
+}
+
+.founder-story .button {
+  margin-top: 18px;
+}
+
+.founder-visual {
+  min-height: 520px;
+  display: grid;
+  align-content: end;
+  padding: clamp(28px, 5vw, 48px);
+  border-radius: var(--radius-lg);
+  color: var(--surface);
+  background:
+    linear-gradient(180deg, oklch(0.22 0.07 165 / 0.02), oklch(0.18 0.055 165 / 0.72)),
+    url("assets/hh-brand-pattern.png");
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.founder-initials {
+  width: 94px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  color: var(--brand-deep);
+  background: var(--sun);
+  font-size: 2.1rem;
+  font-weight: 900;
+}
+
+.founder-visual p {
+  max-width: 430px;
+  margin: 0;
+  color: var(--surface);
+  font-size: clamp(1.5rem, 3vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.founder-wide {
+  grid-column: 1 / -1;
 }
 
 .founder-card p:not(.eyebrow) {
@@ -515,8 +695,9 @@ input:focus-visible {
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: 1.08fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+  align-items: center;
 }
 
 .price-card {
@@ -527,6 +708,147 @@ input:focus-visible {
   color: var(--surface);
   background: var(--brand);
   border-color: var(--brand);
+}
+
+.plan-card {
+  display: grid;
+  gap: 16px;
+}
+
+.plan-card.featured {
+  transform: scale(1.04);
+  box-shadow: 0 28px 80px oklch(0.18 0.035 165 / 0.2);
+}
+
+.plan-head {
+  min-height: 126px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px;
+  border-radius: 24px;
+  color: var(--surface);
+  background: var(--brand);
+}
+
+.plan-card.featured .plan-head {
+  background: var(--brand-deep);
+}
+
+.plan-head h3 {
+  color: var(--surface);
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+}
+
+.plan-head p {
+  margin: 0;
+  color: oklch(0.9 0.025 155);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.plan-card ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.plan-card li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.plan-card li::before {
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  content: "○";
+  color: var(--coral);
+  font-weight: 900;
+}
+
+.plan-card li.included {
+  color: var(--ink);
+}
+
+.plan-card li.included::before {
+  content: "✓";
+  color: var(--brand);
+}
+
+.price-card.featured li,
+.price-card.featured .old-price,
+.price-card.featured .extra-class {
+  color: oklch(0.9 0.025 155);
+}
+
+.price-card.featured li.included,
+.price-card.featured .plan-label,
+.price-card.featured small {
+  color: var(--surface);
+}
+
+.old-price {
+  margin: 10px 0 -6px;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.plan-label {
+  color: var(--muted);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.plan-price {
+  display: block;
+  color: var(--ink);
+  font-size: clamp(3rem, 5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 0.9;
+  text-align: center;
+}
+
+.price-card.featured .plan-price {
+  color: var(--surface);
+}
+
+.plan-card small {
+  color: var(--muted);
+  text-align: center;
+}
+
+.plan-card em {
+  justify-self: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--brand-deep);
+  background: var(--mint);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.extra-class {
+  margin: 0;
+  color: var(--ink);
+  text-align: center;
+  font-weight: 900;
+}
+
+.pricing-disclaimer {
+  max-width: 820px;
+  margin: 28px 0 0;
+  color: oklch(0.33 0.04 83);
+  font-weight: 800;
 }
 
 .price-card p {
@@ -804,6 +1126,10 @@ details p {
   .pricing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .plan-card.featured {
+    transform: none;
+  }
 }
 
 @media (max-width: 680px) {
@@ -895,9 +1221,20 @@ details p {
 
   .proof-strip,
   .benefit-grid,
+  .client-carousel,
   .pricing-grid,
   .field-grid {
     grid-template-columns: 1fr;
+  }
+
+  .carousel-button {
+    display: none;
+  }
+
+  .client-track {
+    grid-auto-columns: minmax(72%, 1fr);
+    margin-right: -14px;
+    padding-right: 14px;
   }
 
   .section {
