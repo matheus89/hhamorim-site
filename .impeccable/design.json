@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-26T00:00:00.000Z",
+  "title": "Design System: HH Amorim",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper Wash",
+        "canonical": "oklch(0.975 0.018 155)",
+        "tonalRamp": [
+          "oklch(0.15 0.018 155)",
+          "oklch(0.25 0.018 155)",
+          "oklch(0.38 0.018 155)",
+          "oklch(0.52 0.018 155)",
+          "oklch(0.68 0.018 155)",
+          "oklch(0.82 0.018 155)",
+          "oklch(0.92 0.018 155)",
+          "oklch(0.975 0.018 155)"
+        ]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "Studio Green",
+        "canonical": "oklch(0.31 0.085 165)",
+        "tonalRamp": [
+          "oklch(0.15 0.085 165)",
+          "oklch(0.22 0.085 165)",
+          "oklch(0.31 0.085 165)",
+          "oklch(0.42 0.085 165)",
+          "oklch(0.55 0.085 165)",
+          "oklch(0.68 0.085 165)",
+          "oklch(0.82 0.085 165)",
+          "oklch(0.94 0.085 165)"
+        ]
+      },
+      "sun": {
+        "role": "secondary",
+        "displayName": "Evidence Sun",
+        "canonical": "oklch(0.86 0.14 83)",
+        "tonalRamp": [
+          "oklch(0.18 0.14 83)",
+          "oklch(0.29 0.14 83)",
+          "oklch(0.42 0.14 83)",
+          "oklch(0.55 0.14 83)",
+          "oklch(0.68 0.14 83)",
+          "oklch(0.78 0.14 83)",
+          "oklch(0.86 0.14 83)",
+          "oklch(0.95 0.14 83)"
+        ]
+      },
+      "coral": {
+        "role": "tertiary",
+        "displayName": "Action Coral",
+        "canonical": "oklch(0.68 0.16 38)",
+        "tonalRamp": [
+          "oklch(0.16 0.16 38)",
+          "oklch(0.27 0.16 38)",
+          "oklch(0.39 0.16 38)",
+          "oklch(0.52 0.16 38)",
+          "oklch(0.68 0.16 38)",
+          "oklch(0.78 0.16 38)",
+          "oklch(0.88 0.16 38)",
+          "oklch(0.95 0.16 38)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Major section statements."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Readable explanatory copy for entrepreneurs."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient-lift",
+        "value": "0 24px 70px oklch(0.18 0.035 165 / 0.14)",
+        "purpose": "Large conversion surfaces and hero imagery."
+      },
+      {
+        "name": "header-float",
+        "value": "0 12px 40px oklch(0.18 0.035 165 / 0.09)",
+        "purpose": "Sticky navigation only."
+      },
+      {
+        "name": "hero-card-lift",
+        "value": "0 16px 44px oklch(0.18 0.035 165 / 0.16)",
+        "purpose": "Small floating proof cards layered over imagery."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-state",
+        "value": "180ms ease",
+        "purpose": "Short hover transitions for buttons and link-like controls."
+      },
+      {
+        "name": "progress-state",
+        "value": "180ms ease",
+        "purpose": "Progress bar width updates in the diagnostic form."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "980px"
+      },
+      {
+        "name": "mobile",
+        "value": "680px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main conversion action for checking a brand.",
+      "html": "<button class=\"ds-btn-primary\">Verifique sua marca</button>",
+      "css": ".ds-btn-primary { min-height: 50px; padding: 13px 20px; border: 1px solid transparent; border-radius: 999px; color: oklch(0.99 0.008 155); background: oklch(0.31 0.085 165); font: 900 1rem/1.2 Aptos, Segoe UI, system-ui, sans-serif; cursor: pointer; transition: transform 180ms ease, background 180ms ease; } .ds-btn-primary:hover { background: oklch(0.22 0.07 165); transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 3px solid oklch(0.68 0.16 38); outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary navigation action beside the main CTA.",
+      "html": "<button class=\"ds-btn-secondary\">Ver como funciona</button>",
+      "css": ".ds-btn-secondary { min-height: 50px; padding: 13px 20px; border: 1px solid oklch(0.84 0.035 155); border-radius: 999px; color: oklch(0.31 0.085 165); background: oklch(0.99 0.008 155); font: 900 1rem/1.2 Aptos, Segoe UI, system-ui, sans-serif; cursor: pointer; transition: transform 180ms ease, border-color 180ms ease; } .ds-btn-secondary:hover { border-color: oklch(0.31 0.085 165); transform: translateY(-1px); } .ds-btn-secondary:focus-visible { outline: 3px solid oklch(0.68 0.16 38); outline-offset: 3px; }"
+    },
+    {
+      "name": "Proof Chip",
+      "kind": "chip",
+      "description": "Rounded proof point for trust statements.",
+      "html": "<span class=\"ds-proof-chip\">Atendimento online</span>",
+      "css": ".ds-proof-chip { display: inline-flex; align-items: center; justify-content: center; padding: 16px 18px; border: 1px solid oklch(0.84 0.035 155); border-radius: 999px; color: oklch(0.22 0.07 165); background: oklch(0.99 0.008 155); font: 900 1rem/1.2 Aptos, Segoe UI, system-ui, sans-serif; }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "Default rounded information container.",
+      "html": "<article class=\"ds-card\"><h3>Busca e classificacao</h3><p>Verificamos marcas semelhantes e indicios da classe adequada.</p></article>",
+      "css": ".ds-card { max-width: 360px; padding: 28px; border: 1px solid oklch(0.84 0.035 155); border-radius: 34px; color: oklch(0.18 0.035 165); background: oklch(0.99 0.008 155); font-family: Aptos, Segoe UI, system-ui, sans-serif; } .ds-card h3 { margin: 0 0 10px; font-size: 1.24rem; line-height: 1.2; font-weight: 900; } .ds-card p { margin: 0; color: oklch(0.46 0.035 165); line-height: 1.55; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Text field used in the diagnostic form.",
+      "html": "<label class=\"ds-field\"><span>Nome da marca</span><input placeholder=\"Ex.: HH Amorim\" /></label>",
+      "css": ".ds-field { display: grid; gap: 8px; color: oklch(0.46 0.035 165); font: 800 1rem/1.35 Aptos, Segoe UI, system-ui, sans-serif; } .ds-field input { min-height: 54px; padding: 12px 16px; border: 1px solid oklch(0.84 0.035 155); border-radius: 16px; color: oklch(0.18 0.035 165); background: oklch(0.985 0.01 155); font: inherit; outline: none; } .ds-field input:focus { border-color: oklch(0.31 0.085 165); box-shadow: 0 0 0 4px oklch(0.55 0.08 165 / 0.18); }"
+    },
+    {
+      "name": "Floating Header",
+      "kind": "nav",
+      "description": "Desktop navigation shell for the brand and primary CTA.",
+      "html": "<header class=\"ds-header\"><div class=\"ds-mark\">HH</div><strong>HH Amorim</strong><a>Verifique sua marca</a></header>",
+      "css": ".ds-header { display: flex; align-items: center; gap: 14px; justify-content: space-between; max-width: 760px; padding: 10px 12px 10px 14px; border: 1px solid oklch(0.9 0.025 155 / 0.85); border-radius: 999px; background: oklch(0.99 0.008 155 / 0.9); box-shadow: 0 12px 40px oklch(0.18 0.035 165 / 0.09); font-family: Aptos, Segoe UI, system-ui, sans-serif; } .ds-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: oklch(0.99 0.008 155); background: oklch(0.31 0.085 165); font-weight: 900; } .ds-header strong { margin-right: auto; color: oklch(0.18 0.035 165); } .ds-header a { padding: 12px 18px; border-radius: 999px; color: oklch(0.99 0.008 155); background: oklch(0.22 0.07 165); font-weight: 900; text-decoration: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Careful Trademark Studio",
+    "overview": "The HH Amorim interface should feel like a careful studio for a legal asset: warm enough for entrepreneurs, precise enough for intellectual property, and visually confident enough to avoid the generic legal-office mold. The current system uses a committed teal-green identity, a sunlit yellow field, and a coral action accent to make the page feel active without becoming aggressive.",
+    "keyCharacteristics": [
+      "Large, confident type with short and direct messaging.",
+      "Rounded, tactile containers that feel approachable rather than bureaucratic.",
+      "Deep green authority balanced by sun and coral accents.",
+      "Real imagery and layered cards in the hero, never abstract placeholders.",
+      "Form-first conversion, with the diagnostic presented as a calm next step."
+    ],
+    "rules": [
+      {
+        "name": "The No Pure White Rule",
+        "body": "Never use pure white or pure black. Every neutral must stay tinted toward the green brand world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Coral Is A Signal Rule",
+        "body": "Coral is for attention, progress, labels, and numbered moments. Do not turn it into the dominant brand color.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Confidence Rule",
+        "body": "Stay in one sans family and create hierarchy with weight, size, and spacing. Do not introduce a decorative serif just to appear premium.",
+        "section": "typography"
+      },
+      {
+        "name": "The Calm Elevation Rule",
+        "body": "Shadows must be broad and soft. If a card looks like a dashboard widget, the shadow is too literal.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Studio Green and Deep Registry Green as the authority base.",
+      "Do keep the diagnostic form prominent, calm, and friction-light.",
+      "Do use real imagery for the hero or equivalent brand surfaces.",
+      "Do explain risk with sober language and clear next steps.",
+      "Do preserve large rounded surfaces, broad spacing, and asymmetric layout."
+    ],
+    "donts": [
+      "Don't make the site look like an escritorio juridico engessado, frio ou excessivamente formal.",
+      "Don't make it look like uma pagina de guru de marketing with urgency tricks, exaggerated claims, or infoproduct aesthetics.",
+      "Don't make it look like uma landing page generica de SaaS with empty metrics, repeated cards, decorative gradients, or fake dashboards.",
+      "Don't promise registro garantido, aprovacao certa, or marca disponivel without prior analysis.",
+      "Don't suggest any official relationship with INPI.",
+      "Don't use pure black, pure white, side-stripe accent borders, or gradient text."
+    ]
+  }
+}
