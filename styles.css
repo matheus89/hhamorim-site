@@ -883,7 +883,10 @@ input:focus-visible {
 .form-section {
   width: 100%;
   max-width: none;
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(28px, 6vw, 72px);
+  align-items: center;
   padding-left: max(16px, calc((100% - 1180px) / 2));
   padding-right: max(16px, calc((100% - 1180px) / 2));
   background: linear-gradient(180deg, var(--paper), oklch(0.93 0.024 232));
@@ -891,7 +894,9 @@ input:focus-visible {
 }
 
 .form-intro {
-  display: none;
+  align-self: start;
+  position: sticky;
+  top: 120px;
 }
 
 .form-intro p:not(.eyebrow) {
@@ -900,8 +905,8 @@ input:focus-visible {
 }
 
 .lead-form {
-  width: min(920px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: clamp(28px, 5vw, 58px);
   box-shadow: var(--shadow);
 }
@@ -929,6 +934,32 @@ input:focus-visible {
 
 .quick-form-header strong {
   font-size: 0.94rem;
+}
+
+.step-meter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.step-meter span {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--paper-2);
+}
+
+.step-meter span.active {
+  background: var(--brand);
+}
+
+.form-step {
+  display: grid;
+  gap: 20px;
+}
+
+.form-step[hidden] {
+  display: none;
 }
 
 fieldset {
@@ -989,6 +1020,36 @@ input:focus {
   gap: 24px;
 }
 
+.option-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.option-card {
+  display: flex;
+  grid-template-columns: none;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--ink);
+  background: oklch(0.975 0.012 86);
+  cursor: pointer;
+}
+
+.option-card:has(input:checked) {
+  border-color: var(--brand);
+  background: var(--paper-2);
+}
+
+.option-card input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+}
+
 .consent-field {
   grid-template-columns: auto 1fr;
   align-items: start;
@@ -1016,10 +1077,20 @@ input:focus {
   margin-top: 20px;
 }
 
+.form-actions.split {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.42fr) minmax(0, 1fr);
+}
+
 .submit-button {
   width: 100%;
   min-height: 78px;
   font-size: 1.18rem;
+}
+
+.step-next {
+  width: 100%;
+  min-height: 64px;
 }
 
 .button:disabled {

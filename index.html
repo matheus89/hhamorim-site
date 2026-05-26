@@ -323,11 +323,19 @@
 
         <form class="lead-form" id="leadForm" novalidate>
           <div class="quick-form-header">
-            <span>Resposta inicial</span>
-            <strong>2 dados para começar</strong>
+            <span id="stepKicker">Teste gratuito</span>
+            <strong><span id="stepCurrent">1</span> de 3 etapas</strong>
           </div>
 
-          <fieldset class="quick-fields">
+          <div class="step-meter" aria-hidden="true">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <p class="form-error" id="formError" role="alert" aria-live="polite"></p>
+
+          <fieldset class="quick-fields form-step active" data-step="1">
             <legend>Por onde começamos?</legend>
             <div class="field-grid compact">
               <label>
@@ -343,6 +351,82 @@
                 <span class="field-hint" id="marcaHint">Pode ser o nome que você já usa ou pretende lançar.</span>
               </label>
               <label>
+                Segmento
+                <input
+                  name="segmento"
+                  type="text"
+                  autocomplete="off"
+                  required
+                  placeholder="Ex.: moda, clínica, restaurante"
+                  aria-describedby="segmentoHint"
+                >
+                <span class="field-hint" id="segmentoHint">Ajuda a entender a classe provável do pedido.</span>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="button primary step-next" type="button">Continuar teste</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="quick-fields form-step" data-step="2" hidden>
+            <legend>Como essa marca está sendo usada?</legend>
+            <div class="option-grid">
+              <label class="option-card">
+                <input name="uso" type="radio" value="Ainda vou lançar" required>
+                <span>Ainda vou lançar</span>
+              </label>
+              <label class="option-card">
+                <input name="uso" type="radio" value="Já uso nas redes sociais">
+                <span>Já uso nas redes sociais</span>
+              </label>
+              <label class="option-card">
+                <input name="uso" type="radio" value="Já vendo com essa marca">
+                <span>Já vendo com essa marca</span>
+              </label>
+            </div>
+            <label>
+              Você já viu nome parecido?
+              <input
+                name="semelhante"
+                type="text"
+                autocomplete="off"
+                placeholder="Ex.: vi um perfil parecido no Instagram"
+                aria-describedby="semelhanteHint"
+              >
+              <span class="field-hint" id="semelhanteHint">Se não souber, pode deixar em branco.</span>
+            </label>
+            <div class="form-actions split">
+              <button class="button secondary step-prev" type="button">Voltar</button>
+              <button class="button primary step-next" type="button">Ver próxima etapa</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="quick-fields form-step" data-step="3" hidden>
+            <legend>Para onde enviamos a resposta?</legend>
+            <div class="field-grid compact">
+              <label>
+                Nome
+                <input
+                  name="nome"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  placeholder="Seu nome"
+                >
+              </label>
+              <label>
+                E-mail
+                <input
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="voce@email.com"
+                  aria-describedby="emailHint"
+                >
+                <span class="field-hint" id="emailHint">A resposta inicial fica registrada para você consultar depois.</span>
+              </label>
+              <label>
                 WhatsApp
                 <input
                   name="whatsapp"
@@ -356,16 +440,16 @@
                 <span class="field-hint" id="whatsappHint">Use DDD para a equipe retornar com segurança.</span>
               </label>
             </div>
-          </fieldset>
-          <label class="consent-field">
-            <input name="consentimento" type="checkbox" value="Sim" required>
-            Autorizo a HH Amorim a usar estes dados para retornar sobre a análise inicial da minha marca.
-          </label>
+            <label class="consent-field">
+              <input name="consentimento" type="checkbox" value="Sim" required>
+              Autorizo a HH Amorim a usar estes dados para retornar sobre a análise inicial da minha marca.
+            </label>
 
-          <p class="form-error" id="formError" role="alert" aria-live="polite"></p>
-          <div class="form-actions">
-            <button class="button primary submit-button" type="submit" id="submitLead">Receber diagnóstico</button>
-          </div>
+            <div class="form-actions split">
+              <button class="button secondary step-prev" type="button">Voltar</button>
+              <button class="button primary submit-button" type="submit" id="submitLead">Receber diagnóstico</button>
+            </div>
+          </fieldset>
         </form>
 
         <div class="thank-you" id="thankYou" hidden>
