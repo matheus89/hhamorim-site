@@ -184,7 +184,7 @@ input {
   transform: translateY(-1px);
 }
 
-.button:focus-visible,
+button:focus-visible,
 a:focus-visible,
 summary:focus-visible,
 input:focus-visible {
@@ -292,6 +292,7 @@ input:focus-visible {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   padding: clamp(74px, 10vw, 122px) 0;
+  scroll-margin-top: 96px;
 }
 
 .section h2 {
@@ -491,6 +492,7 @@ input:focus-visible {
   grid-auto-columns: minmax(166px, 1fr);
   gap: 14px;
   overflow-x: auto;
+  padding: 4px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }

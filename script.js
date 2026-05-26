@@ -202,6 +202,17 @@ function setupClientCarousel() {
 
   clientPrev.addEventListener("click", () => scrollByCard(-1));
   clientNext.addEventListener("click", () => scrollByCard(1));
+  clientTrack.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      scrollByCard(-1);
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      scrollByCard(1);
+    }
+  });
   clientTrack.addEventListener("scroll", () => window.requestAnimationFrame(updateDots));
   updateDots();
 }
