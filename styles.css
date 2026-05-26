@@ -22,6 +22,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -30,6 +31,7 @@ body {
   color: var(--ink);
   font-family: Aptos, "Segoe UI", system-ui, -apple-system, sans-serif;
   line-height: 1.55;
+  overflow-x: hidden;
 }
 
 a {
@@ -211,7 +213,9 @@ input {
   position: absolute;
   inset: 34px 0 0 42px;
   border-radius: 42px;
-  background-image: url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1800&q=84");
+  background-image:
+    linear-gradient(180deg, oklch(0.2 0.05 165 / 0.05), oklch(0.2 0.05 165 / 0.18)),
+    url("https://images.unsplash.com/photo-1652466380685-c552233a941a?auto=format&fit=crop&w=1800&q=82");
   background-position: center;
   background-size: cover;
   box-shadow: var(--shadow);
@@ -371,7 +375,7 @@ input {
 
 .benefit-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -547,10 +551,11 @@ input {
   width: 100%;
   max-width: none;
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
   gap: clamp(28px, 6vw, 72px);
   padding-left: max(16px, calc((100% - 1180px) / 2));
   padding-right: max(16px, calc((100% - 1180px) / 2));
+  scroll-margin-top: 120px;
 }
 
 .form-intro {
@@ -569,44 +574,35 @@ input {
   box-shadow: var(--shadow);
 }
 
-.form-progress span {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--muted);
-  font-size: 0.9rem;
+.quick-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--brand-deep);
+  background: var(--paper-2);
   font-weight: 900;
 }
 
-.form-progress div {
-  height: 9px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--paper-2);
+.quick-form-header span {
+  color: var(--coral);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.form-progress i {
-  display: block;
-  width: 14.285%;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--coral);
-  transition: width 180ms ease;
+.quick-form-header strong {
+  font-size: 0.94rem;
 }
 
 fieldset {
   border: 0;
   margin: 0;
   padding: 0;
-}
-
-.form-step {
-  display: none;
-  min-height: 340px;
-  padding-top: 30px;
-}
-
-.form-step.active {
-  display: block;
 }
 
 legend {
@@ -641,29 +637,15 @@ input:focus {
   box-shadow: 0 0 0 4px oklch(0.55 0.08 165 / 0.18);
 }
 
-.option-grid,
 .field-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-.option-grid label {
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 15px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  color: var(--ink);
-  background: oklch(0.985 0.01 155);
-  cursor: pointer;
-}
-
-.option-grid label:has(input:checked) {
-  border-color: var(--brand);
-  background: oklch(0.92 0.06 155);
+.field-grid.compact {
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
 .consent-field {
@@ -688,12 +670,18 @@ input:focus {
 }
 
 .form-actions {
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 20px;
 }
 
 .submit-button {
-  display: none;
+  width: 100%;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
 }
 
 .thank-you {
@@ -769,7 +757,8 @@ details p {
 @media (max-width: 980px) {
   .site-header {
     top: 0;
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     margin: 0;
     border-radius: 0;
   }
@@ -806,10 +795,32 @@ details p {
   .site-header {
     align-items: center;
     padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
   }
 
   .header-cta {
-    display: none;
+    display: inline-flex;
+    min-width: auto;
+    padding: 10px 13px;
+    font-size: 0;
+  }
+
+  .header-cta::after {
+    content: "Verificar";
+    font-size: 0.86rem;
   }
 
   .hero {
@@ -820,7 +831,22 @@ details p {
   }
 
   .hero h1 {
-    font-size: 3.25rem;
+    font-size: clamp(2.55rem, 12vw, 3.05rem);
+    overflow-wrap: normal;
+  }
+
+  .hero-copy-block {
+    min-width: 0;
+  }
+
+  .hero-copy,
+  .hero-note {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .hero-copy {
+    font-size: 1rem;
   }
 
   .hero-actions .button,
@@ -855,7 +881,6 @@ details p {
   .proof-strip,
   .benefit-grid,
   .pricing-grid,
-  .option-grid,
   .field-grid {
     grid-template-columns: 1fr;
   }
@@ -880,7 +905,14 @@ details p {
     grid-row: auto;
   }
 
-  .form-step {
-    min-height: 440px;
+  .quick-form-header {
+    align-items: flex-start;
+    border-radius: 22px;
+    flex-direction: column;
+  }
+
+  .lead-form,
+  .thank-you {
+    border-radius: 28px;
   }
 }

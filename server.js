@@ -50,11 +50,9 @@ function cleanText(value, maxLength = 500) {
 
 function scoreLead(lead) {
   let score = 0;
-  if (lead.marca && lead.marca.length > 1) score += 20;
-  if (lead.uso === "Sim, ja uso no mercado" || lead.uso === "Uso ha mais de 1 ano") score += 20;
-  if (lead.urgencia === "Quero registrar agora" || lead.urgencia === "Recebi alerta ou notificacao") score += 25;
-  if (lead.whatsapp && lead.whatsapp.replace(/\D/g, "").length >= 10) score += 20;
-  if (lead.segmento && lead.segmento !== "Outro") score += 15;
+  if (lead.marca && lead.marca.length > 1) score += 45;
+  if (lead.whatsapp && lead.whatsapp.replace(/\D/g, "").length >= 10) score += 45;
+  if (lead.consentimento === "Sim") score += 10;
   return score;
 }
 
@@ -84,14 +82,13 @@ function normalizeLead(input) {
 
 function validateLead(lead) {
   const missing = [];
-  ["marca", "uso", "segmento", "tentou", "semelhante", "urgencia", "nome", "whatsapp", "email"].forEach((field) => {
+  ["marca", "whatsapp"].forEach((field) => {
     if (!lead[field]) missing.push(field);
   });
 
   if (lead.consentimento !== "Sim") missing.push("consentimento");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) return "Informe um e-mail valido.";
-  if (lead.whatsapp.replace(/\D/g, "").length < 10) return "Informe um WhatsApp valido.";
-  if (missing.length) return `Campos obrigatorios ausentes: ${missing.join(", ")}.`;
+  if (lead.whatsapp.replace(/\D/g, "").length < 10) return "Informe um WhatsApp válido.";
+  if (missing.length) return `Campos obrigatórios ausentes: ${missing.join(", ")}.`;
   return "";
 }
 
@@ -134,7 +131,7 @@ async function handleLead(req, res) {
       forwarded: forwardResult.forwarded
     });
   } catch (error) {
-    sendJson(res, 500, { ok: false, message: "Erro ao registrar a solicitacao." });
+    sendJson(res, 500, { ok: false, message: "Erro ao registrar a solicitação." });
   }
 }
 

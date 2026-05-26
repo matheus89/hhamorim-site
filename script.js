@@ -1,15 +1,7 @@
-const totalSteps = 7;
-let currentStep = 1;
-
 const config = window.HH_AMORIM_CONFIG || {};
 const form = document.querySelector("#leadForm");
-const steps = [...document.querySelectorAll(".form-step")];
-const progressBar = document.querySelector("#progressBar");
-const stepLabel = document.querySelector("#stepLabel");
-const prevButton = document.querySelector("#prevStep");
-const nextButton = document.querySelector("#nextStep");
-const submitButton = document.querySelector("#submitLead");
 const formError = document.querySelector("#formError");
+const submitButton = document.querySelector("#submitLead");
 const thankYou = document.querySelector("#thankYou");
 const leadStatus = document.querySelector("#leadStatus");
 const calendarLink = document.querySelector("#calendarLink");
@@ -20,80 +12,53 @@ function track(eventName, payload = {}) {
   window.dataLayer.push({ event: eventName, ...payload });
 }
 
-function getCurrentFields() {
-  return [...steps[currentStep - 1].querySelectorAll("input")];
-}
-
-function validateCurrentStep() {
-  const fields = getCurrentFields();
-  const radioGroups = new Set();
-  formError.textContent = "";
-
-  for (const field of fields) {
-    if (field.type === "radio") {
-      radioGroups.add(field.name);
-      continue;
-    }
-
-    if (!field.checkValidity()) {
-      formError.textContent = field.type === "checkbox"
-        ? "Confirme a autorizacao de contato antes de enviar."
-        : "Preencha o campo obrigatorio antes de continuar.";
-      field.focus();
-      return false;
-    }
-  }
-
-  for (const group of radioGroups) {
-    const selected = form.querySelector(`input[name="${group}"]:checked`);
-    const required = form.querySelector(`input[name="${group}"][required]`);
-    if (required && !selected) {
-      formError.textContent = "Selecione uma opcao antes de continuar.";
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function showStep(step) {
-  currentStep = Math.min(Math.max(step, 1), totalSteps);
-
-  steps.forEach((item) => {
-    item.classList.toggle("active", Number(item.dataset.step) === currentStep);
-  });
-
-  const progress = (currentStep / totalSteps) * 100;
-  progressBar.style.width = `${progress}%`;
-  stepLabel.textContent = `Etapa ${currentStep} de ${totalSteps}`;
-  prevButton.style.visibility = currentStep === 1 ? "hidden" : "visible";
-  nextButton.style.display = currentStep === totalSteps ? "none" : "inline-flex";
-  submitButton.style.display = currentStep === totalSteps ? "inline-flex" : "none";
-  formError.textContent = "";
-
-  track("FormStepView", { step: currentStep });
-}
-
 function formDataToObject() {
   const data = new FormData(form);
   return Object.fromEntries(data.entries());
 }
 
+function normalizePhone(value) {
+  return String(value || "").replace(/\D/g, "");
+}
+
 function scoreLead(lead) {
   let score = 0;
-  if (lead.marca && lead.marca.length > 1) score += 20;
-  if (lead.uso === "Sim, ja uso no mercado" || lead.uso === "Uso ha mais de 1 ano") score += 20;
-  if (lead.urgencia === "Quero registrar agora" || lead.urgencia === "Recebi alerta ou notificacao") score += 25;
-  if (lead.whatsapp && lead.whatsapp.replace(/\D/g, "").length >= 10) score += 20;
-  if (lead.segmento && lead.segmento !== "Outro") score += 15;
+  if (lead.marca && lead.marca.length > 1) score += 45;
+  if (normalizePhone(lead.whatsapp).length >= 10) score += 45;
+  if (lead.consentimento === "Sim") score += 10;
   return score;
+}
+
+function validateLead(lead) {
+  if (!lead.marca || lead.marca.trim().length < 2) {
+    return {
+      message: "Informe o nome da marca que você quer verificar.",
+      field: form.elements.marca
+    };
+  }
+
+  if (normalizePhone(lead.whatsapp).length < 10) {
+    return {
+      message: "Informe um WhatsApp com DDD para a equipe retornar.",
+      field: form.elements.whatsapp
+    };
+  }
+
+  if (lead.consentimento !== "Sim") {
+    return {
+      message: "Confirme a autorização de contato para receber o diagnóstico.",
+      field: form.elements.consentimento
+    };
+  }
+
+  return null;
 }
 
 function buildEmailLink(lead) {
   const email = config.contactEmail || "contato@hhamorim.com.br";
-  const subject = encodeURIComponent(`Analise de Registro de Marca - ${lead.marca || ""}`);
+  const subject = encodeURIComponent(`Análise de Registro de Marca - ${lead.marca || ""}`);
   const body = encodeURIComponent(
-    `Ola, gostaria de agendar uma analise inicial da marca ${lead.marca || ""}.\n\nNome: ${lead.nome || ""}\nWhatsApp: ${lead.whatsapp || ""}\nSegmento: ${lead.segmento || ""}\nUrgencia: ${lead.urgencia || ""}`
+    `Olá, gostaria de agendar uma análise inicial da marca ${lead.marca || ""}.\n\nWhatsApp: ${lead.whatsapp || ""}`
   );
   return `mailto:${email}?subject=${subject}&body=${body}`;
 }
@@ -101,7 +66,7 @@ function buildEmailLink(lead) {
 function buildWhatsAppLink(lead) {
   if (!config.whatsappNumber) return "";
   const text = encodeURIComponent(
-    `Ola, preenchi o formulario da HH Amorim e quero agendar a analise da marca ${lead.marca || ""}.`
+    `Olá, preenchi o formulário da HH Amorim e quero agendar a análise da marca ${lead.marca || ""}.`
   );
   return `https://wa.me/${config.whatsappNumber}?text=${text}`;
 }
@@ -121,7 +86,7 @@ async function submitLead(lead) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
-    throw new Error(error.message || "Nao foi possivel registrar a solicitacao.");
+    throw new Error(error.message || "Não foi possível registrar a solicitação.");
   }
 
   return response.json();
@@ -129,13 +94,13 @@ async function submitLead(lead) {
 
 function showThankYou(lead, result, savedOnline) {
   calendarLink.href = getScheduleLink(lead);
-  calendarLink.textContent = config.calendarUrl ? "Escolher horario" : "Agendar analise";
+  calendarLink.textContent = config.calendarUrl ? "Escolher horário" : "Agendar análise";
 
   thankYou.classList.toggle("success", savedOnline);
   thankYou.classList.toggle("warning", !savedOnline);
   leadStatus.textContent = savedOnline
-    ? "Sua solicitacao foi registrada. O proximo passo e escolher um horario para atendimento."
-    : "Sua solicitacao ficou salva neste dispositivo. Use o botao abaixo para chamar a equipe e finalizar o agendamento.";
+    ? "Sua solicitação foi registrada. O próximo passo é escolher um horário para atendimento."
+    : "Sua solicitação ficou salva neste dispositivo. Use o botão abaixo para chamar a equipe e finalizar o agendamento.";
 
   form.hidden = true;
   thankYou.hidden = false;
@@ -144,7 +109,6 @@ function showThankYou(lead, result, savedOnline) {
   track("Lead", {
     id: result && result.id,
     marca: lead.marca,
-    segmento: lead.segmento,
     score: lead.score,
     qualified: lead.qualified
   });
@@ -154,20 +118,20 @@ function showThankYou(lead, result, savedOnline) {
   }
 }
 
-prevButton.addEventListener("click", () => showStep(currentStep - 1));
-
-nextButton.addEventListener("click", () => {
-  if (!validateCurrentStep()) return;
-  showStep(currentStep + 1);
-});
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (!validateCurrentStep()) return;
 
   const lead = formDataToObject();
+  const validation = validateLead(lead);
+
+  if (validation) {
+    formError.textContent = validation.message;
+    validation.field.focus();
+    return;
+  }
+
   lead.score = scoreLead(lead);
-  lead.qualified = lead.score >= 70;
+  lead.qualified = lead.score >= 80;
   lead.createdAt = new Date().toISOString();
   lead.source = "site-hh-amorim";
 
@@ -184,12 +148,10 @@ form.addEventListener("submit", async (event) => {
     showThankYou(lead, null, false);
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = "Enviar e agendar";
+    submitButton.textContent = "Receber diagnóstico";
   }
 });
 
 document.querySelectorAll("[data-event]").forEach((element) => {
   element.addEventListener("click", () => track(element.dataset.event));
 });
-
-showStep(1);
