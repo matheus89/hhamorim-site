@@ -1,3 +1,5 @@
 data/*.jsonl
 data/*.json
 *.log
+.agents/
+skills-lock.json
